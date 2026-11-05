@@ -1,0 +1,76 @@
+### =====================================================
+### TP2 - Scénarios de test (IntelliJ HTTP Client / VS Code REST Client)
+### Lancer d'abord ServiceEtudiants (8081) et ServiceCours (8082)
+### =====================================================
+
+### --- Scénario 1 : création et lecture d'étudiant ---
+
+### 1.1 Créer Sara  (attendu : 201 Created, id = 1)
+POST http://localhost:8081/etudiants
+Content-Type: application/json
+
+{ "nom": "Sara", "email": "sara@u.com" }
+
+### 1.2 Créer Ali  (attendu : 201 Created, id = 2)
+POST http://localhost:8081/etudiants
+Content-Type: application/json
+
+{ "nom": "Ali", "email": "ali@univ.com" }
+
+### 1.3 Lister les étudiants  (attendu : 200 OK, 2 étudiants)  -> CAPTURE 1
+GET http://localhost:8081/etudiants
+
+### 1.4 Lire l'étudiant 1  (attendu : 200 OK)
+GET http://localhost:8081/etudiants/1
+
+### 1.5 Modifier l'étudiant 2  (attendu : 200 OK)
+PUT http://localhost:8081/etudiants/2
+Content-Type: application/json
+
+{ "nom": "Ali Benali", "email": "ali.benali@univ.com" }
+
+### 1.6 Etudiant inexistant  (attendu : 404 Not Found)
+GET http://localhost:8081/etudiants/99
+
+
+### --- Scénario 2 : création et lecture de cours ---
+
+### 2.1 Cours de Sara  (attendu : 201 Created)
+POST http://localhost:8082/cours
+Content-Type: application/json
+
+{ "titre": "Prog 3", "etudiantId": 1 }
+
+### 2.2 Cours d'Ali  (attendu : 201 Created)
+POST http://localhost:8082/cours
+Content-Type: application/json
+
+{ "titre": "Cloud Computing", "etudiantId": 2 }
+
+### 2.3 Lister les cours  (attendu : 200 OK)  -> CAPTURE 2
+GET http://localhost:8082/cours
+
+### 2.4 Lire le cours 1  (attendu : 200 OK)
+GET http://localhost:8082/cours/1
+
+
+### --- Scénario 3 : interaction inter-services ---
+
+### 3.1 Cours enrichis  (attendu : 200 OK, etudiantNom = "Sara" et "Ali Benali")  -> CAPTURE 3
+GET http://localhost:8082/cours/enrichis
+
+
+### --- Scénario 4 : suppression d'un étudiant ---
+
+### 4.1 Supprimer Ali  (attendu : 204 No Content)
+DELETE http://localhost:8081/etudiants/2
+
+### 4.2 Cours enrichis  (attendu : cours 2 -> etudiantNom = "INCONNU", remarque "Etudiant introuvable")
+GET http://localhost:8082/cours/enrichis
+
+
+### --- Scénario 5 : panne de ServiceEtudiants ---
+### ARRÊTER ServiceEtudiants (Ctrl+C, ou : docker stop service-etudiants) puis :
+
+### 5.1 Cours enrichis  (attendu : 200 OK, tous "INCONNU", remarque "ServiceEtudiants indisponible")
+GET http://localhost:8082/cours/enrichis

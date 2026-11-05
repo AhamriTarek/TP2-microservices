@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  etudiants:
+    build: ./ServiceEtudiants
+    container_name: service-etudiants
+    ports:
+      - "8081:8081"
+
+  cours:
+    build: ./ServiceCours
+    container_name: service-cours
+    ports:
+      - "8082:8082"
+    environment:
+      # Dans Docker, "localhost" = le conteneur lui-même.
+      # On utilise donc le NOM du service docker-compose pour joindre ServiceEtudiants.
+      - ETUDIANTS_SERVICE_URL=http://etudiants:8081
+    depends_on:
+      - etudiants
