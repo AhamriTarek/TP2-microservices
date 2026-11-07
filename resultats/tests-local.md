@@ -100,6 +100,8 @@ RESP> [{"id":1,...,"etudiantNom":"Sara"},
        {"id":2,...,"etudiantNom":"INCONNU","remarque":"Etudiant introuvable (supprimé ?)"}]
 ```
 
+Capture : ![Étudiant supprimé](capture4-supprime.png)
+
 ---
 
 ## Scénario 5 — ServiceEtudiants arrêté → tout "INCONNU", pas de 500
@@ -114,6 +116,8 @@ HTTP 200
 RESP> [{"id":1,...,"etudiantNom":"INCONNU","remarque":"ServiceEtudiants indisponible"},
        {"id":2,...,"etudiantNom":"INCONNU","remarque":"ServiceEtudiants indisponible"}]
 ```
+
+Capture : ![Service en panne](capture5-panne.png)
 
 ---
 

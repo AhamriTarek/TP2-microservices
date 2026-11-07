@@ -67,6 +67,16 @@ communiquant en **HTTP/REST synchrone** via `RestTemplate`.
 Détail complet des requêtes, codes HTTP et réponses JSON : voir
 [`tests-local.md`](tests-local.md). **Les 5 scénarios passent.**
 
+### Captures bonus — cas « INCONNU »
+
+**Scénario 4 — étudiant supprimé (GET /cours/enrichis)**
+
+![Étudiant supprimé](capture4-supprime.png)
+
+**Scénario 5 — ServiceEtudiants arrêté (GET /cours/enrichis)**
+
+![Service en panne](capture5-panne.png)
+
 ---
 
 ## 4. Réponses aux questions
