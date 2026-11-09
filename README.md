@@ -37,13 +37,16 @@ mvn spring-boot:run
 
 ## 2. Lancement avec Docker (partie E)
 
+Depuis le dossier `TP2`, exécuter :
 ```bash
-cd ServiceEtudiants && mvn clean package -DskipTests && cd ..
-cd ServiceCours     && mvn clean package -DskipTests && cd ..
-docker-compose up --build
+docker compose up --build
 ```
-Les services restent accessibles sur `localhost:8081` et `localhost:8082`.
-Pour simuler la panne : `docker stop service-etudiants` (relancer : `docker start service-etudiants`).
+Les Dockerfiles compilent le projet avec Maven (multi-stage build) : ni Java ni Maven ne sont nécessaires sur la machine.
+Le premier build prend quelques minutes (téléchargement des dépendances).
+
+Les services sont ensuite accessibles sur `http://localhost:8081/etudiants` et `http://localhost:8082/cours`.
+
+Pour simuler la panne : `docker stop service-etudiants`.
 
 ## 3. Tests (partie D)
 
